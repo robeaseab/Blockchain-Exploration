@@ -1,12 +1,3 @@
-# create th blockchain
-
-import datetime
-import hashlib
-import json 
-from flask import Flask, jsonify
-
-# build the blockchain
-
 class Blockchain:
 
     def __init__(self):
