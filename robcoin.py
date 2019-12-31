@@ -88,9 +88,12 @@ class Blockchain:
             return True
         else:
             return False
+
+
 # mine my blockchain
 # Create web app
 app = Flask(__name__)
+
 
 # creating an address on 5000 port
 node_address = str(uuid4()).replace('-', '')
@@ -138,6 +141,25 @@ def is_valid():
                 'chain': blockchain.chain,
                 'length': len(blockchain.chain)}
     return jsonify(response), 200
+
+
+@app.route('/add_transaction', methods = ['POST'])
+def add_transaction():
+    json = requests.get_json()
+    transaction_keys = {'sender', 'receiver', 'amount'}
+    if not all(key in json for key in transaction_keys):
+        return 'some transactin elements are missing', 400
+    index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
+    response = {'message': f'This transaction will be added to block {index}'}
+    return jsonify(response, 201)
+
+
+@app.route('/connect_node', methods=['POST'])
+def connect_node():
+    json = requests.get_json()
+    nodes = json.get('nodes')
+    if nodes is None:
+        return "no nodes", 400
 
 
 # run app
