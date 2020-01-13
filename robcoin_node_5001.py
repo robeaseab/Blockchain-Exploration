@@ -1,4 +1,3 @@
-
 import datetime
 import hashlib
 import json
@@ -111,7 +110,7 @@ def mine_block():
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
     previous_hash = blockchain.hash(previous_block)
-    blockchain.add_transaction(sender=node_address, receiver="Rob", amount=1)
+    blockchain.add_transaction(sender=node_address, receiver="Floppy", amount=1)
     block = blockchain.create_block(proof, previous_hash)
     response = {'message': 'you just mined a block',
                 'index': block['index'],
@@ -149,7 +148,7 @@ def add_transaction():
     json = request.get_json()
     transaction_keys = {'sender', 'receiver', 'amount'}
     if not all(key in json for key in transaction_keys):
-        return 'some transactin elements are missing', 400
+        return 'some transaction elements are missing', 400
     index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
     response = {'message': f'This transaction will be added to block {index}'}
     return jsonify(response, 201)
@@ -183,4 +182,11 @@ def replace_chain():
 
 
 # run app
-app.run(host='127.0.0.1', port=5000)
+app.run(host='127.0.0.1', port=5001)
+
+
+
+
+
+
+
